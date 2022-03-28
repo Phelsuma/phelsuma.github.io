@@ -1,0 +1,21 @@
+---
+title: "Pete Alexander"
+image: "pete_orig.jpg"
+color1: "#193746"
+color2: "#064e51"
+angle: 120
+links:
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/petejalexander/"
+  - label: Gmail
+    url: "mailto:p.alexander.jcu@gmail.com"
+  - label: GitHub
+    url: "https://github.com/phelsuma"
+  - label: INaturalist
+    url: "https://www.inaturalist.org/people/phelsuma"
+site: distill::distill_website
+output:
+  postcards::onofre
+---
+
+I am passionate about ecology and wildlife conservation, focusing my interests using data science & visualization with tools such as R and QGIS. In my spare time, I enjoy wildlife photography & exploring in 4-wheel drive, with some of my favorite places being the Chiricahuas & the Simpson Desert. I am currently based out of California, USA. 
