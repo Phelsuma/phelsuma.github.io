@@ -1,0 +1,12 @@
+name: "."
+title: "Pete A"
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"              
+      href: index.html 
+    - text: "QGIS"              
+      href: Taranaki_example.html 
+    - text: "R"              
+      href: Taricha_example.html 
+output: distill::distill_article

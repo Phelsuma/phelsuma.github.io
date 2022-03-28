@@ -1,0 +1,94 @@
+---
+title: "Taranaki Maunga"
+description: "An exercise in Geographic Information Systems using QGIS"
+output:
+  distill::distill_article:
+          toc: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.cap = " ",
+  R.options = list(width = 80),
+options(scipen = 999))
+
+library(here)
+```
+
+## Foreward
+
+This document highlights examples of maps created using various remote sensing data products with QGIS open-source GIS software (v 3.22 LTR). This document was written with R (v 4.1.2) as a Distill article for R Markdown (https://rstudio.github.io/distill/) in R Studio (v 2021.09.1+372).
+
+## Taranaki Maunga (Mount Taranaki)
+
+While on a flight from Auckland to Wellington in January 2020, I was greeted by a wondrous sight: *Taranaki Maunga* or Mount Taranaki. 
+
+The volcano's 2518m summit is rivaled in impressiveness only by the nearly perfectly symmetrical 9.6km radius circle encompassing Te Papakura o Taranaki (formerly Egmont National Park). 
+
+```{r}
+knitr::include_graphics(here("20200115_105045.jpg"))
+```
+Inspiration for this project came from noticing the striking difference between the natural vegetation within the park & the outside adjacent agricultural land. 
+
+## Composite Maps
+### Taranaki Region - Vegetation
+
+The first map focuses on a subset of the Taranaki region, consisting of four tiles: 
+
+1) Normalized Difference Vegetation Index (NDVI)
+2) Vegetation Classification
+3) True-color Composite
+4) Digital Elevation Model (DEM) - SRTM
+
+The NDVI & Vegetation Class layers (tiles 1 & 2) were computed using imagery from the ESA Sentinel-2. The True-color Composite image (tile 3) is also courtesy of Sentinel-2. The final layer (tile 4) consists of a Digital Elevation Model (DEM) from NASA's Shuttle Radar Topography Mission (SRTM). 
+
+```{r}
+knitr::include_graphics(here("Taranaki.png"))
+```
+
+One element of interest in the NDVI layer (tile 1); A noticeable waterway feature (visible in red) flowing down from Mt Taranaki before reaching the adjacent mountain (the Pouakai range). The river is then channeled between the two mountains before continuing towards the coast. 
+
+This can be seen further through examining some of the hydrological features in more detail. 
+
+### Mt Taranaki - Waterways
+
+This map focuses on Mt Taranaki and features some waterways (accessed from OpenStreetMap) as vector data on tiles 1 & 3. These tiles represent 4 layers:
+
+1) Digital Elevation Model (DEM) - SRTM
+2) Normalized Difference Moisture Index (NDMI) 
+3) Agriculture 
+4) Near-infrared (NIR) composite
+
+The Digital Elevation Model (tile 1) is from NASA's Shuttle Radar Topography Mission (SRTM). Tiles 2-4 were computed from the NASA/USGS Landsat-8 mission. The Normalized Difference Moisture Index (NDMI), tile 2, was computed using Landsat-8 near-infrared (band 5) & Short-wavelength infrared (SWIR-1, band 6). Layer 3 consists of Landsat-8 band combination of short-wave infrared (SWIR-1, band 6), near-infrared (band 5), and blue (band 2), a combination often used for agricultural monitoring. Tile 4, the near-infrared (NIR) composite is a combination of near-infrared (band 5), red (bad 4), and green (band 3) Landsat-8 bands. 
+
+```{r}
+knitr::include_graphics(here("MtTaranaki.png"))
+```
+
+The prominent waterway in map 2 (above) tile 1 is the Hangatahua River. The waterway vector data (in blue) over the DEM raster provides a better idea of how the catchment collects water between the two peaks and funnels it down to the river below. 
+
+### Hangatahua River Catchment
+
+Map 3 (below) is a 3-Dimensional model of the study area, featuring Mt Taranaki and the Pouakai range. Represented in this map is the Hangatahua River & catchment (blue), as well as the total watershed area (bordered in red).
+
+Rather than using OSM waterway data, channels were calculated from the 8m DEM from Land Information New Zealand (LINZ) using the 'Terrain Analysis' tool from the SAGA (System for Automated Geoscientific Analyses) plugin. First, sinks in the DEM raster were filled using the 'fill' tool. Next, Strahler orders were calculated from the DEM using the 'Strahler Order' tool, resulting in Strahler order values ranging from 1-7. Next, the 'Channel Network & Drainage Basins' tool was used to extract the waterways as vector data by Strahler order threshold (repeated for each Strahler order 4-7). Additionally, the 'Channel Network & Drainage Basins' function was used to compute a drainage basin polygon for the Hangatahua within the study area. 
+
+The four layers of waterway vector data (Strahler orders 4, 5, 6, & 7) were, along with the drainage basin (in red), DEM, & a True-Color composite tile (Sentinel-2), then rendered in 3-D with a vertical scale adjustment of 2.
+
+```{r}
+knitr::include_graphics(here("Hangatahua.png"))
+```
+
+Viewing this map in 3-D provides an intuitive perspective on the role these two mountains play in accumulating water on their slopes and feeding into small waterways. As elevation decreases, these smaller waterways converge and channel into the Hangatahua River in the valley below. The river then continues flowing downstream past the park boundary, meandering through agricultural areas, before finally reaching the Tasman Sea. 
+
+## Final thoughts
+
+While the LINZ 8m DEM used for map 3 was created through interpolation and is unsuitable for terrain analysis, it is sufficient resolution for primary visualization of the catchment in this example.  
+
+The Taranaki region, including Taranaki Mounga, is the sacred ancestral home of multiple Māori *iwi*. The volcano is of such significance that it was granted "legal personality" in 2017, becoming the third geographic feature in New Zealand to receive legal human rights through the designation. 
+
+Additional information on the complicated history of Taranaki Maunga, including the 1865 seizure from the Māori can be found at:
+https://taranakimounga.nz/nga-mounga/history/

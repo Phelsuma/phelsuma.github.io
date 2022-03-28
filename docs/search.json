@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-03-28T14:45:59-05:00"
+    },
+    {
+      "path": "index.html",
+      "title": "PeteA",
+      "description": "Welcome to the website. I hope you enjoy it!\n",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-03-28T14:46:02-05:00"
+    }
+  ],
+  "collections": []
+}
